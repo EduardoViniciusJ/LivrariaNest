@@ -39,7 +39,6 @@ export class BookDTO {
   @Type(() => Number)
   price: number;
 
-  @IsOptional()
   @IsArray({ message: 'Categories must be in an array.' })
   @ArrayMinSize(1, {
     message: 'Book can have a minimum of 1 category.',
@@ -52,5 +51,5 @@ export class BookDTO {
     message: 'Each category must be represented by ID.',
   })
   @Type(() => Number)
-  categories?: number[];
+  categories: number[];
 }
