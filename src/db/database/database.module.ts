@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Category } from '../entities/category.entity';
+import { Book } from '../entities/book.entity';
 
 @Module({
   imports: [
@@ -10,7 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'root',
       password: 'Root@1234!',
       database: 'livrarianestdb',
-      entities: [],
+      entities: [Book, Category],
       synchronize: true,
     }),
   ],

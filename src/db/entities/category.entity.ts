@@ -1,5 +1,4 @@
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Book } from './Book.entity';
 
 @Entity({ name: 'categories' })
 export class Category {
