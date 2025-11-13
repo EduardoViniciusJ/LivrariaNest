@@ -2,6 +2,7 @@
 import { Type } from 'class-transformer';
 import {
   ArrayMaxSize,
+  ArrayMinSize,
   IsArray,
   IsInt,
   IsNotEmpty,
@@ -19,7 +20,7 @@ export class BookDTO {
   @IsNotEmpty({ message: 'Title is required.' })
   @MinLength(1, { message: 'Title must have at least 1 character.' })
   @MaxLength(254, { message: 'Title must have at most 254 characters.' })
-  tile: string;
+  title: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Author is required.' })
@@ -40,6 +41,9 @@ export class BookDTO {
 
   @IsOptional()
   @IsArray({ message: 'Categories must be in an array.' })
+  @ArrayMinSize(1, {
+    message: 'Book can have a minimum of 1 category.',
+  })
   @ArrayMaxSize(3, {
     message: 'Book can have a maximum of 3 categories.',
   })
