@@ -16,7 +16,6 @@ import {
 } from 'class-validator';
 
 export class BookDTO {
-  @IsString()
   @IsNotEmpty({ message: 'Title is required.' })
   @MinLength(1, { message: 'Title must have at least 1 character.' })
   @MaxLength(254, { message: 'Title must have at most 254 characters.' })
