@@ -12,8 +12,10 @@ export class CategoryService {
   ) {}
 
   async createCategory(categoryDTO: CategoryDTO): Promise<Category> {
+    const category = categoryDTO.name.trim(); // Remove whitespaces
+
     const existingCategory = await this.categoryRepository.findOne({
-      where: { name: categoryDTO.name },
+      where: { name: category },
     });
 
     if (existingCategory) {
@@ -23,8 +25,8 @@ export class CategoryService {
       );
     }
 
-    const category = this.categoryRepository.create(categoryDTO);
-    return this.categoryRepository.save(category);
+    const newCategory = this.categoryRepository.create({ name: category });
+    return this.categoryRepository.save(newCategory);
   }
 
   async getAllCategories(): Promise<Category[]> {
@@ -66,14 +68,16 @@ export class CategoryService {
     id: number,
     categoryDTO: CategoryDTO,
   ): Promise<Category> {
-    const category = await this.getCategoryById(id);
+    const categoryOld = await this.getCategoryById(id);
 
-    if (categoryDTO.name === category.name) {
-      return category;
+    const newCategory = categoryDTO.name.trim(); // Remove whitespaces
+
+    if (newCategory === categoryOld.name) {
+      return categoryOld;
     }
 
     const existingCategory = await this.categoryRepository.findOne({
-      where: { name: categoryDTO.name },
+      where: { name: newCategory },
     });
 
     if (existingCategory) {
@@ -83,8 +87,8 @@ export class CategoryService {
       );
     }
 
-    const updatedCategory = this.categoryRepository.merge(category, {
-      name: categoryDTO.name,
+    const updatedCategory = this.categoryRepository.merge(categoryOld, {
+      name: newCategory,
     });
 
     return this.categoryRepository.save(updatedCategory);
