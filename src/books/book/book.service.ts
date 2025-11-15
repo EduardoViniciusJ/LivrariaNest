@@ -15,26 +15,35 @@ export class BookService {
   ) {}
 
   async createBook(bookDTO: BookDTO): Promise<Book> {
-    const { categories: categoryIds = [], ...data } = bookDTO;
+    const { categories: categoryIds, ...data } = bookDTO;
 
-    let categories: Category[] = [];
+    const foundCategories = await this.categoryRepository.findBy({
+      id: In(categoryIds),
+    });
 
-    if (categoryIds.length) {
-      const foundCategories = await this.categoryRepository.findBy({
-        id: In(categoryIds),
-      });
-
-      if (foundCategories.length !== categoryIds.length) {
-        throw new HttpException('No category was found.', HttpStatus.NOT_FOUND);
-      }
-
-      categories = foundCategories;
+    if (foundCategories.length !== categoryIds.length) {
+      throw new HttpException(
+        'One or more categories were not found.',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
-    const book = this.bookRepository.create({ ...data, categories });
+    const book = this.bookRepository.create({
+      ...data,
+      categories: foundCategories,
+    });
 
     return this.bookRepository.save(book);
   }
 
-  
+  async getAllBook(): Promise<Book[]> {
+    const books = await this.bookRepository.find({
+      relations: ['categories'],
+    });
+
+    if (books.length == 0) {
+      throw new HttpException('Books not found', HttpStatus.NOT_FOUND);
+    }
+    return books;
+  }
 }
