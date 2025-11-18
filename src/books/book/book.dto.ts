@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Type } from 'class-transformer';
 import {
   ArrayMaxSize,
@@ -17,38 +16,38 @@ import {
 
 export class BookDTO {
   @IsString()
-  @IsNotEmpty({ message: 'Title is required.' })
-  @MinLength(1, { message: 'Title must have at least 1 character.' })
-  @MaxLength(254, { message: 'Title must have at most 254 characters.' })
+  @IsNotEmpty({ message: 'O título é obrigatório.' })
+  @MinLength(1, { message: 'O título deve ter no mínimo 1 caractere.' })
+  @MaxLength(254, { message: 'O título deve ter no máximo 254 caracteres.' })
   title: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Author is required.' })
-  @MaxLength(254, { message: 'Author must have at most 254 characters.' })
+  @IsNotEmpty({ message: 'O autor é obrigatório.' })
+  @MaxLength(254, { message: 'O autor deve ter no máximo 254 caracteres.' })
   author: string;
 
   @IsOptional()
   @IsString()
   @Matches(/\.(jpg|jpeg|png)$/i, {
-    message: 'Image must be in JPG or PNG format.',
+    message: 'A imagem deve estar no formato JPG ou PNG.',
   })
   imageUrl?: string;
 
   @IsNumber()
-  @IsPositive({ message: 'Price must be greater than zero.' })
+  @IsPositive({ message: 'O preço deve ser maior que zero.' })
   @Type(() => Number)
   price: number;
 
-  @IsArray({ message: 'Categories must be in an array.' })
+  @IsArray({ message: 'As categorias devem estar em um array.' })
   @ArrayMinSize(1, {
-    message: 'Book can have a minimum of 1 category.',
+    message: 'O livro deve ter no mínimo 1 categoria.',
   })
   @ArrayMaxSize(3, {
-    message: 'Book can have a maximum of 3 categories.',
+    message: 'O livro deve ter no máximo 3 categorias.',
   })
   @IsInt({
     each: true,
-    message: 'Each category must be represented by ID.',
+    message: 'Cada categoria deve ser representada por um ID.',
   })
   @Type(() => Number)
   categories: number[];

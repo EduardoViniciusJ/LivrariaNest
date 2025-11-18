@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import {
   IsNotEmpty,
   IsString,
@@ -9,13 +8,13 @@ import {
 
 export class CategoryDTO {
   @IsString()
-  @IsNotEmpty({ message: 'Category name is required.' })
-  @MinLength(1, { message: 'Category must have at least 1 character.' })
+  @IsNotEmpty({ message: 'O nome da categoria é obrigatório.' })
+  @MinLength(1, { message: 'A categoria deve ter no mínimo 1 caractere.' })
   @MaxLength(254, {
-    message: 'Category name must have at most 254 characters.',
+    message: 'O nome da categoria deve ter no máximo 254 caracteres.',
   })
   @Matches(/^(?!\s+$).+$/, {
-    message: 'Category name cannot be only whitespace.',
+    message: 'O nome da categoria não pode conter apenas espaços em branco.',
   })
   name: string;
 }

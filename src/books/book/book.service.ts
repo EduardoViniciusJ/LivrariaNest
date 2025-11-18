@@ -23,7 +23,7 @@ export class BookService {
 
     if (foundCategories.length !== categoryIds.length) {
       throw new HttpException(
-        'One or more categories were not found.',
+        'Uma ou mais categorias não foram encontradas.',
         HttpStatus.NOT_FOUND,
       );
     }
@@ -41,9 +41,10 @@ export class BookService {
       relations: ['categories'],
     });
 
-    if (books.length == 0) {
-      throw new HttpException('Books not found', HttpStatus.NOT_FOUND);
+    if (books.length === 0) {
+      throw new HttpException('Nenhum livro encontrado.', HttpStatus.NOT_FOUND);
     }
+
     return books;
   }
 
@@ -53,8 +54,8 @@ export class BookService {
       relations: ['categories'],
     });
 
-    if (book == null) {
-      throw new HttpException('Book not found', HttpStatus.NOT_FOUND);
+    if (!book) {
+      throw new HttpException('Livro não encontrado.', HttpStatus.NOT_FOUND);
     }
 
     return book;
@@ -64,7 +65,7 @@ export class BookService {
     const book = await this.getBookById(id);
     await this.bookRepository.remove(book);
 
-    return { message: `Book '${book.title}' deleted successfully.` };
+    return { message: `Livro '${book.title}' deletado com sucesso.` };
   }
 
   async updatebook(id: number, bookDTO: BookDTO): Promise<Book> {
@@ -78,7 +79,7 @@ export class BookService {
 
     if (foundCategories.length !== categoryIds.length) {
       throw new HttpException(
-        'One or more categories were not found.',
+        'Uma ou mais categorias não foram encontradas.',
         HttpStatus.NOT_FOUND,
       );
     }
