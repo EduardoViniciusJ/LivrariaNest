@@ -50,21 +50,26 @@ O sistema fornece um CRUD completo de **Livros** e **Categorias**, com validaç�
 
 ## 🔗 Endpoints Principais
 
-POST	/api/book/create	Criar um novo livro
-GET	/api/book	Buscar todos os livros
-GET	/api/book/:id	Buscar livro por ID
-PUT	/api/book/update/:id	Atualizar livro
-DELETE	/api/book/delete/:id	Deletar livro
+### 📘 **Livros (Book)**  
+| Método | Rota                     | Descrição            |
+|--------|---------------------------|------------------------|
+| POST   | /api/book/create         | Criar um novo livro   |
+| GET    | /api/book                | Buscar todos os livros |
+| GET    | /api/book/:id            | Buscar livro por ID    |
+| PUT    | /api/book/update/:id     | Atualizar livro        |
+| DELETE | /api/book/delete/:id     | Deletar livro          |
 
 ---
 
-POST	/api/category/create	Criar categoria
-GET	/api/category	Listar categorias
-GET	/api/category/:id	Buscar categoria por ID
-PUT	/api/category/update/:id	Atualizar categoria
-DELETE	/api/category/delete/:id	Deletar categoria
+### 🏷️ **Categorias (Category)**  
+| Método | Rota                         | Descrição               |
+|--------|-------------------------------|---------------------------|
+| POST   | /api/category/create         | Criar categoria          |
+| GET    | /api/category                | Listar categorias        |
+| GET    | /api/category/:id            | Buscar categoria por ID  |
+| PUT    | /api/category/update/:id     | Atualizar categoria      |
+| DELETE | /api/category/delete/:id     | Deletar categoria        |
 
----
 
 ## 🏗️ Arquitetura
 O projeto segue a organização padrão NestJS com módulos independentes
