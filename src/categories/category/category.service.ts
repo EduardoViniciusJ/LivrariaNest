@@ -12,7 +12,7 @@ export class CategoryService {
   ) {}
 
   async createCategory(categoryDTO: CategoryDTO): Promise<Category> {
-    const category = categoryDTO.name.trim(); // Remove whitespaces
+    const category = categoryDTO.name.trim(); // Remove espaços em branco
 
     const existingCategory = await this.categoryRepository.findOne({
       where: { name: category },
@@ -20,7 +20,7 @@ export class CategoryService {
 
     if (existingCategory) {
       throw new HttpException(
-        'Category with this name already exists.',
+        'Já existe uma categoria com esse nome.',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -31,8 +31,11 @@ export class CategoryService {
 
   async getAllCategories(): Promise<Category[]> {
     const categories = await this.categoryRepository.find();
-    if (categories.length == 0) {
-      throw new HttpException('Category not found', HttpStatus.NOT_FOUND);
+    if (categories.length === 0) {
+      throw new HttpException(
+        'Nenhuma categoria encontrada.',
+        HttpStatus.NOT_FOUND,
+      );
     }
     return categories;
   }
@@ -43,8 +46,11 @@ export class CategoryService {
       relations: ['books'],
     });
 
-    if (category == null) {
-      throw new HttpException('Category not found.', HttpStatus.NOT_FOUND);
+    if (!category) {
+      throw new HttpException(
+        'Categoria não encontrada.',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     return category;
@@ -55,13 +61,14 @@ export class CategoryService {
 
     if (category.books && category.books.length > 0) {
       throw new HttpException(
-        `Cannot delete category '${category.name}' because it has ${category.books.length} book(s) associated. Remove all books from this category first.`,
+        `Não é possível excluir a categoria '${category.name}' porque ela possui ${category.books.length} livro(s) associado(s). Remova os livros dessa categoria primeiro.`,
         HttpStatus.BAD_REQUEST,
       );
     }
+
     await this.categoryRepository.remove(category);
 
-    return { message: `Category '${category.name}' deleted successfully.` };
+    return { message: `Categoria '${category.name}' deletada com sucesso.` };
   }
 
   async updateCategory(
@@ -70,7 +77,7 @@ export class CategoryService {
   ): Promise<Category> {
     const categoryOld = await this.getCategoryById(id);
 
-    const newCategory = categoryDTO.name.trim(); // Remove whitespaces
+    const newCategory = categoryDTO.name.trim(); // Remove espaços em branco
 
     if (newCategory === categoryOld.name) {
       return categoryOld;
@@ -82,7 +89,7 @@ export class CategoryService {
 
     if (existingCategory) {
       throw new HttpException(
-        'Category with this name already exists.',
+        'Já existe uma categoria com esse nome.',
         HttpStatus.BAD_REQUEST,
       );
     }
